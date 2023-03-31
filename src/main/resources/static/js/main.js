@@ -38,9 +38,9 @@ function onConnected() {
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
     //订阅个人消息
-    stompClient.subscribe(`/user/${username}/queue/justL`,getMessageByOtherUser);
+    stompClient.subscribe(`/user/${username}/justL`,getMessageByOtherUser);
     //点对点发送消息
-    stompClient.subscribe(`/user/${username}/queue/chatToUser/res`,getMessageByMyself);
+    stompClient.subscribe(`/user/${username}/chatToUser/res`,getMessageByMyself);
     // Tell your username to the server
     stompClient.send("/app/chat.addUser",
         {},
