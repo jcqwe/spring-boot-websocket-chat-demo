@@ -41,10 +41,10 @@ public class ChatController {
     }
 
     @MessageMapping("/chatToUser")
-    public ChatMessage sendMessageToUser(@Payload ChatMessage chatMessage, Principal principal) {
+    public ChatMessage sendMessageToUser(@Payload ChatMessage chatMessage) {
         log.info("{}",chatMessage.getUser().toString());
         //向指定客户端发送消息，第一个参数消息接收用户，客户端订阅消息地址为：/user/${username}/queue/justL,消息内容
-        messagingTemplate.convertAndSendToUser(principal.getName(), "/queue/justL", chatMessage);
+        messagingTemplate.convertAndSendToUser(chatMessage.getUser().getToUserName(), "/queue/justL", chatMessage);
         //发送给自己
         messagingTemplate.convertAndSendToUser(chatMessage.getUser().getSendUserName(), "/queue/chatToUser/res", chatMessage);
         return chatMessage;

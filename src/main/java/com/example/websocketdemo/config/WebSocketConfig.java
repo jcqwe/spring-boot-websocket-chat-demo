@@ -25,8 +25,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .addInterceptors(myHandshakeInterceptor())  //添加 websocket握手拦截器
-                .setHandshakeHandler(myDefaultHandshakeHandler())   //添加 websocket握手处理器
+//                .addInterceptors(myHandshakeInterceptor())  //添加 websocket握手拦截器
+//                .setHandshakeHandler(myDefaultHandshakeHandler())   //添加 websocket握手处理器
                 .withSockJS();
     }
 
@@ -67,14 +67,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
              */
             @Override
             public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-                ServletServerHttpRequest req = (ServletServerHttpRequest) request;
-                //通过url的query参数获取认证参数
-                String username = req.getServletRequest().getParameter("username");
-                User user = new User();
-                user.setToUserName("L");
-                user.setSendUserName(username);
-                //保存认证用户
-                attributes.put("user", user);
                 return true;
             }
 
@@ -91,7 +83,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
             @Override
             protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
                 //设置认证通过的用户到当前会话中
-                return (Principal)attributes.get("user");
+                return null;
             }
         };
     }

@@ -25,7 +25,7 @@ function connect(event) {
         chatPage.classList.remove('hidden');
         avatarPage.classList.remove('hidden');
 
-        var socket = new SockJS("/ws?username="+username);
+        var socket = new SockJS("/ws");
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected, onError);
@@ -69,7 +69,19 @@ function getMessageByOtherUser(payload){
         messageElement.classList.add('event-message');
         message.content = message.sender + ' left!';
     } else {
-        createMsgElement(messageElement);
+        messageElement.classList.add('chat-message');
+
+        var avatarElement = document.createElement('i');
+        var avatarText = document.createTextNode(message.sender[0]);
+        avatarElement.appendChild(avatarText);
+        avatarElement.style['background-color'] = getAvatarColor(message.sender);
+
+        messageElement.appendChild(avatarElement);
+
+        var usernameElement = document.createElement('span');
+        var usernameText = document.createTextNode(message.sender);
+        usernameElement.appendChild(usernameText);
+        messageElement.appendChild(usernameElement);
     }
 
     var textElement = document.createElement('p');
