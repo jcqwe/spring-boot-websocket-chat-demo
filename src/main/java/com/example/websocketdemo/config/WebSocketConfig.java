@@ -34,8 +34,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         //客户端向服务器发送消息地址的前缀
         registry.setApplicationDestinationPrefixes("/app");
-        //设置客户端接收点对点消息地址的前缀，默认为 /user
-        registry.setUserDestinationPrefix("/user");
         //客户端接收消息地址的前缀
         registry.enableSimpleBroker(
     "/topic",//群发消息前缀
